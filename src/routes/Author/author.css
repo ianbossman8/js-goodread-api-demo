@@ -1,0 +1,50 @@
+.author-page {
+  padding: 2rem;
+}
+
+.author-page b {
+  text-transform: capitalize;
+  margin: 0.5rem 0;
+}
+
+.author-page {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.author-page > div:first-of-type {
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  width: 200px;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.author-page .author-photo {
+  min-height: 250px;
+  margin-top: 1rem;
+}
+
+.author-page__author-info {
+  max-width: 60%;
+  padding-left: 2rem;
+}
+
+.author-page__author-info ul {
+  padding: 0;
+}
+
+.author-page .followers-detail-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+
+.author-page .followers-detail img {
+  max-height: 50px;
+  max-width: 40px;
+}

@@ -1,0 +1,15 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+}
+
+.pagination li {
+  margin: 0 1rem;
+  font-size: 1.25rem;
+  padding: 0.25rem;
+}
+
+.pagination li.page-num--selected {
+  background-color: bisque;
+}

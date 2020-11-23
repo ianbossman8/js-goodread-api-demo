@@ -1,0 +1,31 @@
+.detailed-book-list__item {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 4px;
+  list-style-type: none;
+}
+
+.detailed-book-list__item > div:first-of-type {
+  margin-right: 1rem;
+}
+
+button[name='read-expand__button'] {
+  border: none;
+  text-decoration: underline;
+  color: green;
+  cursor: pointer;
+  letter-spacing: 1px;
+  background: none;
+}
+
+.detailed-book-list__item-detail > p {
+  text-transform: capitalize;
+}
+
+button[name='read-expand__button']:hover {
+  background-color: bisque;
+  font-weight: bold;
+}

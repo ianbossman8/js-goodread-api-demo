@@ -1,0 +1,48 @@
+.home-page {
+  padding: 1rem;
+  height: 100%;
+  width: 100vw;
+}
+
+.home-page .search-form {
+  width: 100%;
+  margin-top: 40vh;
+  padding: 1rem;
+  transition: margin-top 0.8s;
+}
+
+.home-page .search-form.search-form--top {
+  margin-top: 0;
+}
+
+.home-page form > label {
+  display: inline-block;
+  margin-left: 25%;
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+}
+
+.home-page .main-search__input {
+  box-sizing: border-box;
+  margin-left: 25%;
+  width: 50%;
+  min-height: 3rem;
+  padding: 0.5rem;
+  font-size: 2rem;
+  border: 2px solid black;
+  border-radius: 4px;
+}
+
+.home-page .main-search__input::placeholder {
+  font-size: 1.5rem;
+}
+
+.home-page .search-status {
+  margin-left: 25%;
+  padding-left: 1rem;
+  font-weight: bold;
+}
+
+.home-page .search-status span:first-child {
+  text-transform: capitalize;
+}
