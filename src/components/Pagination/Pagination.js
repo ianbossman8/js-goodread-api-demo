@@ -6,7 +6,7 @@ function PageLink(props) {
   return (
     <li className={props.isSelected ? 'page-num--selected' : ''}>
       <Link
-        to={`/${props.value}?q=${props.queryStr}`}
+        to={`/page/${props.value}?q=${props.queryStr}`}
         onClick={(e) => props.handleClick(e, props.value)}
         id={props.page}
       >

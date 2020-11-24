@@ -15,4 +15,9 @@
     Access-Control-Allow-Origin = "https://infallible-wilson-4e1a09.netlify.app/"
     Access-Control-Allow-Headers = "Accept"
     Access-Control-Allow-Credentials = "true"
+  
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200
 

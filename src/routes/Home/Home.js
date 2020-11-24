@@ -73,7 +73,7 @@ function Home() {
 
     if (queryStr) {
       if (Object.keys(results).length === 0) {
-        dispatch(getSearchResults(queryStr, undefined, parseInt(params.page))(controller.signal))
+        dispatch(getSearchResults(queryStr, undefined, parseInt(params.p))(controller.signal))
       }
     } else {
       history.push('/')
@@ -125,7 +125,7 @@ function Home() {
               handlePageClick={handlePageClick}
               numberOfPages={showNumberOfPages}
               queryStr={queryStr}
-              curPage={parseInt(params.page === undefined ? 1 : params.page)}
+              curPage={parseInt(params.p === undefined ? 1 : params.p)}
             />
           </>
         )

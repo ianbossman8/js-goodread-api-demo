@@ -31,7 +31,7 @@ export default function reducer(state = initialState, action) {
           imageUrl: result.image_url,
           authorInfo: result.about,
           hometown: result.hometown,
-          authoredBooks: result.books.book,
+          authoredBooks: result.books.book || [],
         },
         error: '',
       }

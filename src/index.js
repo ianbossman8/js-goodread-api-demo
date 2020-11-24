@@ -23,7 +23,8 @@ async function init() {
         <BrowserRouter>
           <React.Suspense fallback={<div />}>
             <Switch>
-              <Route exact path={'/:page?'} render={() => <Home />} />
+              <Route exact path={'/'} render={() => <Home />} />
+              <Route path={'/page/:p'} render={() => <Home />} />
               <Route path={'/author/:name/:id'} render={() => <Author />} />
               <Route path={'/auth'} render={() => <Auth />} />
             </Switch>

@@ -1,12 +1,11 @@
 import axios from 'axios'
 import parser from 'fast-xml-parser'
 import { api } from '../constant'
-import '../util'
 
 export async function handler(event) {
   try {
-    const authodPath = event.path.split('/')
-    const authorId = authodPath[authodPath.length - 1]
+    const authorPath = event.path.split('/')
+    const authorId = authorPath[authorPath.length - 1]
 
     const authorUrl = new URL(`/author/show/${authorId}`, api.goodread)
     const params = {
