@@ -1,7 +1,7 @@
 import axios from 'axios'
 import parser from 'fast-xml-parser'
 import { api } from '../constant'
-import './util'
+import '../util'
 
 export async function handler(event) {
   try {

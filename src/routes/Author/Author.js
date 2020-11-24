@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link, useParams, useLocation } from 'react-router-dom'
 import DetailedBookList from '../../components/DetailedBookList/DetailedBookList'
 import getAuthorDetails from '../../actions/getAuthorDetailsActions'
+import { api } from '../../constant'
 import './author.css'
 
 function authorDetailsStateSelector(state) {
@@ -42,7 +43,7 @@ function followersRender(err, fetching, res, auth) {
     return <p>no followers</p>
   }
 
-  return <a href="http://localhost:9000/auth">login to see author followers</a>
+  return <a href={`${api.netlify}/.netlify/functions/auth`}>login to see author followers</a>
 }
 
 function Author() {

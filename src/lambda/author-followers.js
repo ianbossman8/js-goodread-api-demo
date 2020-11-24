@@ -1,7 +1,7 @@
 import parser from 'fast-xml-parser'
 import { parse } from 'cookie'
 import { api } from '../constant'
-import oauth1 from './util'
+import oauth1 from '../util'
 
 const headers = {
   'Access-Control-Allow-Origin': 'http://localhost:3000',

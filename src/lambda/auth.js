@@ -2,6 +2,7 @@ import { api } from '../constant'
 
 export async function handler() {
   try {
+    console.log(process.env.GOODREAD_REQ_TOKEN)
     const authUrl = new URL(`/oauth/authorize?oauth_token=${process.env.GOODREAD_REQ_TOKEN}`, api.goodread)
 
     return {

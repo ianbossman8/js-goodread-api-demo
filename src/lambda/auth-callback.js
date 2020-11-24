@@ -1,4 +1,4 @@
-import oauth1 from './util'
+import oauth1 from '../util'
 import { serialize } from 'cookie'
 
 export async function handler(event) {
