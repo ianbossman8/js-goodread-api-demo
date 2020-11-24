@@ -29,7 +29,7 @@ export default function getAuthorFollowers(authorUserId, page = 1) {
     try {
       dispatch(actions.fetchingAuthorFollowers())
 
-      const authorFollowersUrl = new URL(`/author-followers/${authorUserId}`, netlifyEndpoint)
+      const authorFollowersUrl = new URL(`/.netlify/functions/author-followers/${authorUserId}`, netlifyEndpoint)
       const params = {
         page,
       }

@@ -31,7 +31,7 @@ export default function getAuthorDetails(authodId) {
     try {
       dispatch(actions.fetchingAuthorDetails())
 
-      const authorDetailUrl = new URL(`/author/${authodId}`, netlifyEndpoint)
+      const authorDetailUrl = new URL(`/.netlify/functions/author/${authodId}`, netlifyEndpoint)
 
       const response = await fetch(authorDetailUrl)
 

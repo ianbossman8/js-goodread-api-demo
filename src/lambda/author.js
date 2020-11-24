@@ -5,7 +5,8 @@ import './util'
 
 export async function handler(event) {
   try {
-    const authorId = event.path.split('/')[2]
+    const authodPath = event.path.split('/')
+    const authorId = authodPath[authodPath.length - 1]
 
     const authorUrl = new URL(`/author/show/${authorId}`, api.goodread)
     const params = {

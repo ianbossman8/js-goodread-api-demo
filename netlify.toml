@@ -2,7 +2,16 @@
   command = "npm run build"
   functions = "dist/server"
 [[headers]]
-  for = "/*"
+  for = '''
+  "/search" 
+  "/author"
+  '''
     [headers.values]
-    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Origin = "https://infallible-wilson-4e1a09.netlify.app/"
+[[headers]]
+  for = "/author-followers"
+    [headers.values]
+    Access-Control-Allow-Origin = "https://infallible-wilson-4e1a09.netlify.app/"
+    Access-Control-Allow-Headers = "Accept"
+    Access-Control-Allow-Credentials = "true"
 

@@ -30,7 +30,8 @@ export default function getSearchResults(query, search = 'all', page = 1) {
       try {
         dispatch(actions.fetchingSearchResult())
 
-        const goodreadSearchUrl = new URL('/search', netlifyEndpoint)
+        const goodreadSearchUrl = new URL('/.netlify/functions/search', netlifyEndpoint)
+
         const params = {
           q: query,
           page,
