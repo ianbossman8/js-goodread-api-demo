@@ -22,7 +22,6 @@ export async function handler(event) {
       return {
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Accept',
         },
         statusCode: 200,
         body: JSON.stringify(jsonObj),
@@ -34,7 +33,6 @@ export async function handler(event) {
     return {
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Accept',
       },
       statusCode: 500,
       body: JSON.stringify(error.message),
