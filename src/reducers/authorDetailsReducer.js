@@ -12,10 +12,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         fetching: true,
+        error: '',
       }
     case ACTION_CONSTANTS.AUTHOR_DETAILS_ERROR:
       return {
         ...state,
+        fetching: false,
         error: action.error,
       }
     case ACTION_CONSTANTS.AUTHOR_DETAILS_RECEIVED:

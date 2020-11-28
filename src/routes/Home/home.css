@@ -26,6 +26,7 @@
   box-sizing: border-box;
   margin-left: 25%;
   width: 50%;
+  min-width: 250px;
   min-height: 3rem;
   padding: 0.5rem;
   font-size: 2rem;

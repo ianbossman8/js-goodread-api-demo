@@ -15,34 +15,38 @@ function PageLink(props) {
     </li>
   )
 }
-const initialState = [2, 3, 4]
-function Pagination(props) {
-  const { numberOfPages, queryStr, curPage } = props
 
+function Pagination(props) {
+  const initialState = [2, 3, 4]
   const [pageLinkState, setPageLinkState] = useState(initialState)
+  const { numberOfPages, queryStr, curPage } = props
 
   function handleClick(e, value) {
     props.handlePageClick(value)
 
+    // when the last number of the triple is clicked
     if (parseInt(e.target.id) === pageLinkState.length && pageLinkState[pageLinkState.length - 1] < numberOfPages - 1) {
       setPageLinkState((prevPageLinkState) =>
         prevPageLinkState.reduce((newArr, curPageVal) => (newArr = [...newArr, ++curPageVal]), [])
       )
     }
 
+    // when the first number of the triple is clicked
     if (parseInt(e.target.id) === 1 && pageLinkState[0] > 2) {
       setPageLinkState((prevPageLinkState) =>
         prevPageLinkState.reduce((newArr, curPageVal) => (newArr = [...newArr, --curPageVal]), [])
       )
     }
 
-    if (parseInt(e.target.id) === numberOfPages) {
+    // when the last number of the pagination is clicked
+    if (parseInt(e.target.id) === numberOfPages - 1) {
       let n = numberOfPages
       setPageLinkState((prevPageLinkState) =>
         prevPageLinkState.reduce((newArr) => (newArr = [...newArr, --n]), []).reverse()
       )
     }
 
+    // when the first number of the pagination is clicked
     if (parseInt(e.target.id) === 0) {
       setPageLinkState(initialState)
     }
@@ -50,6 +54,7 @@ function Pagination(props) {
 
   return (
     <ol className="pagination">
+      {/* if number of pages are less than or equal to 4 always display all*/}
       {numberOfPages <= 4 ? (
         [...Array(numberOfPages)].map((_, page) => (
           <PageLink
@@ -62,6 +67,7 @@ function Pagination(props) {
           />
         ))
       ) : (
+        // awalys show first and last page number
         <>
           <PageLink
             key={0}
@@ -84,8 +90,8 @@ function Pagination(props) {
           ))}
           {pageLinkState[pageLinkState.length - 1] + 1 !== numberOfPages && <span>...</span>}
           <PageLink
-            key={numberOfPages}
-            page={numberOfPages}
+            key={numberOfPages - 1}
+            page={numberOfPages - 1}
             value={numberOfPages}
             queryStr={queryStr}
             handleClick={handleClick}

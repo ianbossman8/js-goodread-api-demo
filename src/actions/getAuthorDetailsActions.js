@@ -1,4 +1,4 @@
-import getAuthorFollowers from './getAuthorFollowersActions'
+import getAuthorFollowers, { actions as authorActions } from './getAuthorFollowersActions'
 
 export const ACTION_CONSTANTS = {
   AUTHOR_DETAILS_FETCHING: 'AUTHOR_DETAILS_FETCHING',
@@ -30,7 +30,7 @@ export default function getAuthorDetails(authodId) {
   return async (dispatch, getState, { netlifyEndpoint }) => {
     try {
       dispatch(actions.fetchingAuthorDetails())
-
+      dispatch(authorActions.resetAuthorFollowers())
       const authorDetailUrl = new URL(`/.netlify/functions/author/${authodId}`, netlifyEndpoint)
 
       const response = await fetch(authorDetailUrl)
@@ -44,9 +44,9 @@ export default function getAuthorDetails(authodId) {
 
         return dispatch(actions.receivedAuthorDetails(parsedRes.GoodreadsResponse.author))
       }
-      throw new Error('api error')
+      throw new Error('author detail api error')
     } catch (error) {
-      actions.errorAuthorDetails(error.message)
+      dispatch(actions.errorAuthorDetails(error.message))
     }
   }
 }

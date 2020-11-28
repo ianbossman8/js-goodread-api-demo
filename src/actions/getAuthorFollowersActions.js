@@ -2,6 +2,7 @@ export const ACTION_CONSTANTS = {
   AUTHOR_FOLLOWERS_FETCHING: 'AUTHOR_FOLLOWERS_FETCHING',
   AUTHOR_FOLLOWERS_RECEIVED: 'AUTHOR_FOLLOWERS_RECEIVED',
   AUTHOR_FOLLOWERS_ERROR: 'AUTHOR_FOLLOWERS_ERROR',
+  AUTHOR_FOLLOWERS_RESET: 'AUTHOR_FOLLOWERS_RESET',
 }
 
 export const actions = {
@@ -20,6 +21,11 @@ export const actions = {
     return {
       type: ACTION_CONSTANTS.AUTHOR_FOLLOWERS_ERROR,
       error,
+    }
+  },
+  resetAuthorFollowers: function () {
+    return {
+      type: ACTION_CONSTANTS.AUTHOR_FOLLOWERS_RESET,
     }
   },
 }
@@ -47,9 +53,9 @@ export default function getAuthorFollowers(authorUserId, page = 1) {
         return dispatch(actions.receivedAuthorFollowers(parsedRes.GoodreadsResponse.followers.user))
       }
 
-      throw new Error('api error')
+      throw new Error('followers api error')
     } catch (error) {
-      actions.errorAuthorFollowers(error.message)
+      dispatch(actions.errorAuthorFollowers(error.message))
     }
   }
 }

@@ -58,6 +58,7 @@ function Author() {
   )
 
   useEffect(() => {
+    // fetch again when refresh
     let controller = new AbortController()
 
     if (Object.keys(authorInfo).length === 0) {
@@ -78,7 +79,7 @@ function Author() {
       ) : (
         <>
           <div>
-            <Link to={location.state.from}>Back</Link>
+            <Link to={location.state?.from ?? '/'}>Back</Link>
             <img className="author-photo" src={authorInfo.imageUrl} alt={`${authorInfo.name}`} />
             <b>home town- {authorInfo.hometown}</b>
             <b>fans count- {authorInfo.fansCount}</b>

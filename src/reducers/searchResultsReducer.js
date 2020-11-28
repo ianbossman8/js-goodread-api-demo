@@ -22,12 +22,14 @@ export default function reducer(state = initialState, action) {
       const { result } = action
 
       return {
+        ...state,
         fetching: false,
         results: {
           query: result.query,
           work: result.results.work ? result.results.work : [],
           totalResults: result['total-results'],
         },
+        error: '',
       }
     default:
       return state

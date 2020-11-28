@@ -10,14 +10,18 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ACTION_CONSTANTS.AUTHOR_FOLLOWERS_FETCHING:
       return {
-        ...state,
+        results: [],
         fetching: true,
+        error: '',
       }
     case ACTION_CONSTANTS.AUTHOR_FOLLOWERS_ERROR:
       return {
         ...state,
         error: action.error,
+        fetching: false,
       }
+    case ACTION_CONSTANTS.AUTHOR_FOLLOWERS_RESET:
+      return initialState
     case ACTION_CONSTANTS.AUTHOR_FOLLOWERS_RECEIVED:
       const { result } = action
 

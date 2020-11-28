@@ -1,4 +1,4 @@
-function searchResultWorkMapper(work) {
+export function searchResultWorkMapper(work) {
   const {
     best_book,
     average_rating,
@@ -30,6 +30,7 @@ function searchResultWorkMapper(work) {
 
 export function searchResultFormatter(result) {
   if (result) {
+    // api would return an object when only one result from the query
     if (!Array.isArray(result)) {
       return [searchResultWorkMapper(result)]
     }

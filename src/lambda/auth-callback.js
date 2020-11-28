@@ -3,6 +3,12 @@ import oauth from './util'
 import db from './util/db'
 
 export async function handler(event) {
+  const { client, q } = db
+  const reDirLoc = (auth) =>
+    process.env.NODE_ENV !== 'production'
+      ? `http://localhost:3000/auth?auth=${auth}`
+      : `https://infallible-wilson-4e1a09.netlify.app/auth?auth=${auth}`
+
   try {
     const { oauth_token, authorize } = event.queryStringParameters
 
@@ -10,8 +16,9 @@ export async function handler(event) {
       if (authorize !== '1') {
         reject(new Error('not auth'))
       }
-      return db.client.query(db.q.Paginate(db.q.Match(db.q.Index('req')))).then((res) => {
-        return db.client.query(db.q.Get(res.data[0])).then((res) => {
+
+      return client.query(q.Paginate(q.Match(q.Index('req')))).then((res) => {
+        return client.query(q.Get(res.data[0])).then((res) => {
           oauth.getOAuthAccessToken(oauth_token, res.data.token_secret, function (err, token, token_secret) {
             if (err) {
               reject(new Error('fail to reach api'))
@@ -30,10 +37,7 @@ export async function handler(event) {
             resolve({
               statusCode: 302,
               headers: {
-                Location:
-                  process.env.NODE_ENV !== 'production'
-                    ? 'http://localhost:3000/auth?auth=1'
-                    : 'https://infallible-wilson-4e1a09.netlify.app/auth?auth=1',
+                Location: reDirLoc(1),
                 'Cache-Control': 'no-cache',
               },
               multiValueHeaders: {
@@ -48,10 +52,7 @@ export async function handler(event) {
       return {
         statusCode: 302,
         headers: {
-          Location:
-            process.env.NODE_ENV !== 'production'
-              ? 'http://localhost:3000/auth?auth=0'
-              : 'https://infallible-wilson-4e1a09.netlify.app/auth?auth=0',
+          Location: reDirLoc(0),
           'Cache-Control': 'no-cache',
         },
         body: '',
@@ -61,10 +62,7 @@ export async function handler(event) {
     return {
       statusCode: 302,
       headers: {
-        Location:
-          process.env.NODE_ENV !== 'production'
-            ? 'http://localhost:3000/auth?auth=0'
-            : 'https://infallible-wilson-4e1a09.netlify.app/auth?auth=0',
+        Location: reDirLoc(0),
         'Cache-Control': 'no-cache',
       },
       body: '',

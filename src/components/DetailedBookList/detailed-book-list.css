@@ -21,11 +21,11 @@ button[name='read-expand__button'] {
   background: none;
 }
 
-.detailed-book-list__item-detail > p {
-  text-transform: capitalize;
-}
-
 button[name='read-expand__button']:hover {
   background-color: bisque;
   font-weight: bold;
+}
+
+.detailed-book-list__item-detail > p {
+  text-transform: capitalize;
 }

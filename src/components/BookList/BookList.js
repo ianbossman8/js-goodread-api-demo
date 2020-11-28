@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './booklist.css'
 
 function BookList(props) {
-  const location = useLocation()
-
   const [hoveredItem, setisHovered] = useState()
 
   function handleHover(e) {
@@ -50,7 +48,7 @@ function BookList(props) {
                   <Link
                     to={{
                       pathname: `/author/${item.author.name}/${item.author.id}`,
-                      state: { from: `${location.pathname}${location.search}` },
+                      state: { from: `${props.location.pathname}${props.location.search}` },
                     }}
                     onClick={() => props.getAuthorDetails(item.author.id)}
                   >

@@ -3,6 +3,12 @@ import db from './util/db'
 import { api } from '../constant'
 
 export async function handler() {
+  const { client, q } = db
+  const reDirLoc = (auth) =>
+    process.env.NODE_ENV !== 'production'
+      ? `http://localhost:3000/auth?auth=${auth}`
+      : `https://infallible-wilson-4e1a09.netlify.app/auth?auth=${auth}`
+
   try {
     return new Promise((resolve, reject) =>
       oauth.getOAuthRequestToken(function (err, token, token_secret) {
@@ -10,15 +16,16 @@ export async function handler() {
           reject(new Error('fail to reach api'))
         }
 
-        const item = {
-          data: { token_secret },
-        }
-
-        return db.client.query(db.q.Paginate(db.q.Match(db.q.Index('req')))).then((res) => {
+        return client.query(q.Paginate(q.Match(q.Index('req')))).then((res) => {
+          console.log(2378489278293479)
           if (res.data.length !== 0) {
-            db.client.query(db.q.Delete(db.q.Ref(db.q.Collection('goodread'), res.data[0].value.id))).then(() =>
-              db.client
-                .query(db.q.Create(db.q.Collection('goodread'), item))
+            client.query(q.Delete(q.Ref(q.Collection('goodread'), res.data[0].value.id))).then(() =>
+              client
+                .query(
+                  q.Create(q.Collection('goodread'), {
+                    data: { token_secret },
+                  })
+                )
                 .then(() => {
                   const authUrl = new URL(`/oauth/authorize?oauth_token=${token}`, api.goodread)
 
@@ -35,10 +42,7 @@ export async function handler() {
                   return {
                     statusCode: 302,
                     headers: {
-                      Location:
-                        process.env.NODE_ENV === 'production'
-                          ? 'http://localhost:3000/auth?auth=0'
-                          : 'https://infallible-wilson-4e1a09.netlify.app/auth?auth=0',
+                      Location: reDirLoc(0),
                       'Cache-Control': 'no-cache',
                     },
                     body: JSON.stringify(err.message),
@@ -46,8 +50,8 @@ export async function handler() {
                 })
             )
           } else {
-            db.client
-              .query(db.q.Create(db.q.Collection('goodread'), item))
+            client
+              .query(q.Create(q.Collection('goodread'), item))
               .then(() => {
                 const authUrl = new URL(`/oauth/authorize?oauth_token=${token}`, api.goodread)
 
@@ -64,10 +68,7 @@ export async function handler() {
                 return {
                   statusCode: 302,
                   headers: {
-                    Location:
-                      process.env.NODE_ENV === 'production'
-                        ? 'http://localhost:3000/auth?auth=0'
-                        : 'https://infallible-wilson-4e1a09.netlify.app/auth?auth=0',
+                    Location: reDirLoc(0),
                     'Cache-Control': 'no-cache',
                   },
                   body: JSON.stringify(err.message),
@@ -80,10 +81,7 @@ export async function handler() {
       return {
         statusCode: 302,
         headers: {
-          Location:
-            process.env.NODE_ENV === 'production'
-              ? 'http://localhost:3000/auth?auth=0'
-              : 'https://infallible-wilson-4e1a09.netlify.app/auth?auth=0',
+          Location: reDirLoc(0),
           'Cache-Control': 'no-cache',
         },
         body: JSON.stringify(error.message),
@@ -93,10 +91,7 @@ export async function handler() {
     return {
       statusCode: 302,
       headers: {
-        Location:
-          process.env.NODE_ENV === 'production'
-            ? 'http://localhost:3000/auth?auth=0'
-            : 'https://infallible-wilson-4e1a09.netlify.app/auth?auth=0',
+        Location: reDirLoc(0),
         'Cache-Control': 'no-cache',
       },
       body: '',

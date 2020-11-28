@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams, useLocation } from 'react-router-dom'
 import { searchResultFormatter } from './helpers'
 import getSearchResults from '../../actions/searchResultActions'
 import getAuthorDetails from '../../actions/getAuthorDetailsActions'
@@ -14,6 +14,7 @@ function searchResulsStateSelector(state) {
 }
 
 function Home() {
+  const location = useLocation()
   const history = useHistory()
   const params = useParams()
   const queryUrl = useQuery()
@@ -24,7 +25,8 @@ function Home() {
 
   const { results, fetching, error } = searchResults
   const { query, work, totalResults } = results
-  const queryStr = queryUrl.get('q')
+  const queryParam = 'q'
+  const queryStr = queryUrl.get(queryParam)
 
   function handleGetAuthorDetails(authodId) {
     dispatch(getAuthorDetails(authodId))
@@ -35,6 +37,7 @@ function Home() {
   }
 
   function handleKeyDown(e) {
+    // when enter key is received we can ignore it
     if (e.key === 'Enter') {
       e.preventDefault()
     }
@@ -45,6 +48,7 @@ function Home() {
 
     dispatch(getSearchResults(queryStr, undefined, page)(controller.signal))
 
+    // scroll back to top when page link at the bottom is clicked
     window.scroll({
       top: 0,
       behavior: 'smooth',
@@ -52,15 +56,17 @@ function Home() {
   }
 
   useEffect(() => {
+    const waitTimeAfterType = 500
+
     let controller = new AbortController()
 
     const debouncedSearch = setTimeout(() => {
       if (inputVal) {
-        history.push(`/?q=${encodeURI(inputVal)}`)
+        history.push(`/?${queryParam}=${encodeURI(inputVal)}`)
 
         return dispatch(getSearchResults(inputVal)(controller.signal))
       }
-    }, 500)
+    }, waitTimeAfterType)
 
     return () => {
       controller.abort()
@@ -69,6 +75,7 @@ function Home() {
   }, [inputVal, dispatch, history])
 
   useEffect(() => {
+    // fetch again when refresh
     let controller = new AbortController()
 
     if (queryStr) {
@@ -86,19 +93,23 @@ function Home() {
 
   const booksList = useMemo(() => searchResultFormatter(work), [work])
   const isResultEmpty = useMemo(() => Object.keys(results).length === 0, [results])
-  const numberOfPages = Math.ceil(totalResults / 20)
-  const showNumberOfPages = useMemo(() => (numberOfPages > 100 ? 100 : numberOfPages), [numberOfPages])
+
+  const numOfResultsFromApi = 20
+  const numberOfPages = Math.ceil(totalResults / numOfResultsFromApi)
+
+  const maxPage = 100
+  const showNumberOfPages = useMemo(() => (numberOfPages > maxPage ? maxPage : numberOfPages), [numberOfPages])
 
   return (
     <div className="home-page">
       <form className={`search-form${!isResultEmpty ? ' search-form--top' : ''}`}>
-        <label htmlFor="books search">
+        <label htmlFor="books-search">
           <b>start searching here</b>
         </label>
         <br></br>
         <input
           className="main-search__input"
-          name="books search"
+          name="books-search"
           onKeyDown={handleKeyDown}
           onChange={handleSearch}
           value={inputVal}
@@ -118,9 +129,8 @@ function Home() {
           <>
             <p className="search-status">
               <span>numer of results: {totalResults}</span>
-            </p>{' '}
-            {/* calculate currenct items */}
-            <BookList items={booksList} getAuthorDetails={handleGetAuthorDetails} />
+            </p>
+            <BookList items={booksList} getAuthorDetails={handleGetAuthorDetails} location={location} />
             <Pagination
               handlePageClick={handlePageClick}
               numberOfPages={showNumberOfPages}

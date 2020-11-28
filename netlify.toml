@@ -2,6 +2,9 @@
   command = "npm run build"
   functions = "dist/server"
 
+[build.environment]
+  API_KEY = "RXUSccOoxFCSL75oH0GCg"
+
 [[headers]]
   for = '''
   "/search" 

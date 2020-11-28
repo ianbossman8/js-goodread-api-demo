@@ -48,8 +48,8 @@ export async function handler(event) {
     }).catch((error) => {
       return {
         statusCode: 500,
-        headers,
         body: JSON.stringify(error.message),
+        headers,
       }
     })
   } catch (error) {

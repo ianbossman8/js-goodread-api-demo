@@ -27,9 +27,8 @@ export const actions = {
 export default function getSearchResults(query, search = 'all', page = 1) {
   return function (signal) {
     return async (dispatch, _, { netlifyEndpoint }) => {
+      dispatch(actions.fetchingSearchResult())
       try {
-        dispatch(actions.fetchingSearchResult())
-
         const goodreadSearchUrl = new URL('/.netlify/functions/search', netlifyEndpoint)
 
         const params = {
@@ -48,9 +47,9 @@ export default function getSearchResults(query, search = 'all', page = 1) {
           return dispatch(actions.receivedSearchResults(parsedRes.GoodreadsResponse.search))
         }
 
-        throw new Error('api error')
+        throw new Error('search api error')
       } catch (error) {
-        actions.errorSearchResult(error.message)
+        dispatch(actions.errorSearchResult(error.message))
       }
     }
   }

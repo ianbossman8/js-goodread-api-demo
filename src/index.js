@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 import Home from './routes/Home/Home'
 import { ACTION_CONSTANTS, getAuthAction } from './actions/authActions'
+import ErrorBoundary from './components/ErroBoundary/ErroBoundary'
 import reportWebVitals from './reportWebVitals'
 import './index.css'
 
@@ -22,12 +23,14 @@ async function init() {
       <Provider store={store}>
         <BrowserRouter>
           <React.Suspense fallback={<div />}>
-            <Switch>
-              <Route exact path={'/'} render={() => <Home />} />
-              <Route path={'/page/:p'} render={() => <Home />} />
-              <Route path={'/author/:name/:id'} render={() => <Author />} />
-              <Route path={'/auth'} render={() => <Auth />} />
-            </Switch>
+            <ErrorBoundary>
+              <Switch>
+                <Route exact path={'/'} render={() => <Home />} />
+                <Route path={'/page/:p'} render={() => <Home />} />
+                <Route path={'/author/:name/:id'} render={() => <Author />} />
+                <Route path={'/auth'} render={() => <Auth />} />
+              </Switch>
+            </ErrorBoundary>
           </React.Suspense>
         </BrowserRouter>
       </Provider>
